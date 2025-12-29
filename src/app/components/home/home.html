@@ -1,0 +1,14 @@
+<div class="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
+
+    <div class="w-full flex justify-center items-center">
+
+        @if (currentView() === 'login') {
+        <app-login (onSwitch)="switchView('register')" (onSuccess)="switchView('chat')"></app-login>
+        } @else if (currentView() === 'register') {
+        <app-register (onSwitch)="switchView('login')"></app-register>
+        } @else {
+        <app-chat-room (onLogout)="switchView('login')"></app-chat-room>
+        }
+
+    </div>
+</div>

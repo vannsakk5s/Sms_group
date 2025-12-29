@@ -1,0 +1,78 @@
+<div class="w-full max-w-5xl h-[85vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 animate-fade-in">
+  
+  <div class="px-6 py-4 bg-white border-b border-slate-100 flex justify-between items-center shadow-sm">
+    <div class="flex items-center gap-4">
+      <div class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-200">
+        💬
+      </div>
+      <div>
+        <h3 class="font-black text-slate-800 text-lg tracking-tight">General Chat</h3>
+        <p class="text-xs text-green-500 flex items-center gap-1 font-bold uppercase tracking-wider">
+          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Online
+        </p>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-6">
+      <div class="hidden md:flex flex-col items-end">
+        <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Logged in as</span>
+        <span class="text-sm font-bold text-slate-700">{{ authService.currentUser()?.username }}</span>
+      </div>
+      <button (click)="logout()" 
+              class="px-4 py-2 bg-red-50 text-red-500 rounded-xl font-bold text-xs hover:bg-red-500 hover:text-white transition-all transform active:scale-95 border border-red-100">
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/50" #scrollContainer>
+    @if (chatService.messages().length === 0) {
+      <div class="h-full flex flex-col items-center justify-center text-slate-300">
+        <div class="text-6xl mb-4">🏜️</div>
+        <p class="font-medium italic text-sm">No messages yet. Start the conversation!</p>
+      </div>
+    }
+
+    @for (msg of chatService.messages(); track $index) {
+      <div class="flex flex-col" 
+           [ngClass]="msg.sender === authService.currentUser()?.username ? 'items-end' : 'items-start'">
+        
+        <div>
+            <span class="text-[10px] font-black text-slate-400 mb-1.5 uppercase tracking-[0.1em]">
+              {{ msg.sender }}
+            </span>
+            <span class="text-[9px] text-slate-400 mt-1 px-2">
+                {{ msg.timestamp | date: 'dd/MM/yyyy HH:mm:ss' }}
+            </span>
+        </div>
+        
+
+        <div [ngClass]="msg.sender === authService.currentUser()?.username 
+              ? 'bg-blue-600 text-white rounded-2xl rounded-tr-none shadow-blue-100' 
+              : 'bg-white text-slate-700 border border-slate-200 rounded-2xl rounded-tl-none shadow-slate-50'" 
+             class="px-5 py-3.5 shadow-md max-w-[80%] md:max-w-md break-words font-medium leading-relaxed">
+          {{ msg.content }}
+        </div>
+
+        
+      </div>
+    }
+  </div>
+
+  <div class="p-4 bg-white border-t border-slate-100 flex items-center gap-3">
+    <div class="relative flex-1">
+      <input [(ngModel)]="newMessage" (keyup.enter)="onSendMessage()"
+             type="text"
+             placeholder="Type your message here..." 
+             class="w-full bg-slate-100 border-none rounded-2xl px-6 py-4 pr-12 focus:ring-2 focus:ring-blue-500 outline-none transition-all font-medium text-slate-700">
+    </div>
+    
+    <button (click)="onSendMessage()" 
+            [disabled]="!newMessage.trim()"
+            class="bg-blue-600 text-white p-4 rounded-2xl shadow-xl shadow-blue-200 hover:bg-blue-700 hover:scale-105 transition-all active:scale-90 disabled:opacity-50 disabled:hover:scale-100">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 rotate-90">
+        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+      </svg>
+    </button>
+  </div>
+</div>

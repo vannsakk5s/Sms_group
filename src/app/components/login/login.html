@@ -1,0 +1,18 @@
+<div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-200">
+  <h2 class="text-3xl font-black text-blue-600 text-center mb-6">Login ចសបងថ</h2>
+  <div class="space-y-4">
+    <input [(ngModel)]="credentials.email" type="email" placeholder="Email" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+    <input [(ngModel)]="credentials.password" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+    <button (click)="onLogin()" class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold hover:bg-blue-700 transition-all">Login</button>
+  </div>
+  <p class="text-center mt-6 text-sm">No account? <a (click)="onSwitch.emit()" class="text-blue-600 cursor-pointer font-bold hover:underline">Register</a></p>
+  <!-- <div>
+    <h1>{{ 'LOGIN_TITLE' | translate }}</h1>
+    <button (click)="changeLang('km')">ភាសាខ្មែរ</button>
+      <button (click)="changeLang('en')">English</button>
+  </div> -->
+
+  <!-- <h1>{{ 'WELCOME' | translate }}</h1> -->
+
+  <!-- <h1>{{ 'welcome_message' | i18next }}</h1> -->
+</div>
