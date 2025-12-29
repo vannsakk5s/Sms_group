@@ -1,0 +1,21 @@
+{
+  "Form": {
+    "Sign In": "Sign In",
+    "Login": "Login",
+    "Email": "Email",
+    "Password": "Password",
+    "No account?": "No account?",
+    "Register": "Register",
+    "Username": "Username",
+    "Have an account?": "Have an account?",
+    "Sign Up": "Sign Up"
+  },
+  "Chat": {
+    "GeneralChat": "General Chat",
+    "Online": "Online",
+    "LoggedInAs": "Logged in as",
+    "Logout": "Logout",
+    "NoMessages": "No messages yet. Start the conversation!",
+    "TypeMessage": "Type your message here..."
+  }
+}

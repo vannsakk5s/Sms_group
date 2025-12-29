@@ -1,0 +1,18 @@
+<div class="flex items-center bg-gray-200 p-[2px] rounded-lg w-fit shadow-inner">
+  <div class="flex">
+    <button 
+      (click)="langService.setLanguage('en')" 
+      [ngClass]="langService.getCurrentLang() === 'en' ? 'bg-white shadow-sm text-black' : 'text-gray-400 hover:text-gray-700'"
+      class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 uppercase">
+      EN
+    </button>
+
+    <button 
+      (click)="langService.setLanguage('kh')" 
+      [ngClass]="langService.getCurrentLang() === 'kh' ? 'bg-white shadow-sm text-black' : 'text-gray-400 hover:text-gray-700'"
+      class="px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-200 uppercase">
+      KH
+    </button>
+  </div>
+</div>
+
