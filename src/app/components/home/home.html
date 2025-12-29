@@ -1,14 +1,17 @@
-<div class="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
+<div class="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4 font-sans transition-colors duration-300">
+    
+    <div class="fixed top-4 right-4 flex gap-2">
+        <app-theme-switcher></app-theme-switcher>
+        <app-lang-switcher></app-lang-switcher>
+    </div>
 
     <div class="w-full flex justify-center items-center">
-
         @if (currentView() === 'login') {
-        <app-login (onSwitch)="switchView('register')" (onSuccess)="switchView('chat')"></app-login>
+            <app-login (onSwitch)="switchView('register')" (onSuccess)="switchView('chat')"></app-login>
         } @else if (currentView() === 'register') {
-        <app-register (onSwitch)="switchView('login')"></app-register>
+            <app-register (onSwitch)="switchView('login')"></app-register>
         } @else {
-        <app-chat-room (onLogout)="switchView('login')"></app-chat-room>
+            <app-chat-room (onLogout)="switchView('login')"></app-chat-room>
         }
-
     </div>
 </div>

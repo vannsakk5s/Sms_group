@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LangSwitcher } from "./components/lang-switcher/lang-switcher";
+import { ThemeSwitcher } from "./components/theme-switcher/theme-switcher";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LangSwitcher],
+  imports: [RouterOutlet, LangSwitcher, ThemeSwitcher],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

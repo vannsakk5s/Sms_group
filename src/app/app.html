@@ -1,2 +1,8 @@
-<app-lang-switcher class="absolute top-4 right-4"></app-lang-switcher>
-<router-outlet />
+<div class="min-h-screen bg-slate-100 dark:bg-slate-900 flex items-center justify-center p-4 transition-colors duration-300">
+  <div class="fixed top-4 right-4 flex gap-2">
+    <app-theme-switcher></app-theme-switcher>
+    <app-lang-switcher></app-lang-switcher>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

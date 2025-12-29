@@ -3,17 +3,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, RouterModule],
   standalone: true,
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
 export class Register {
   private authService = inject(AuthService);
-  @Output() onSwitch = new EventEmitter<void>();
+  private router = inject(Router);
 
   authData = { username: '', email: '', password: '' };
 
@@ -21,7 +22,8 @@ export class Register {
     this.authService.register(this.authData).subscribe({
       next: () => {
         alert('ចុះឈ្មោះជោគជ័យ!');
-        this.onSwitch.emit(); // ត្រឡប់ទៅផ្ទាំង Login
+        // ប្តូរទៅកាន់ URL /login បន្ទាប់ពីចុះឈ្មោះជោគជ័យ
+        this.router.navigate(['/login']);
       },
       error: (err) => alert(err.error.message)
     });

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ChatService } from '../../services/chat';
 import { AuthService } from '../../core/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-room',
@@ -15,8 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ChatRoom {
   chatService = inject(ChatService);
   authService = inject(AuthService);
+  private router = inject(Router);
   
-  @Output() onLogout = new EventEmitter<void>();
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   newMessage = '';
@@ -33,6 +34,10 @@ export class ChatRoom {
 
   ngOnInit() {
     // សំខាន់៖ ត្រូវ Join Room ពេល Component បើកមកភ្លាម
+    if (!this.authService.currentUser()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.chatService.joinRoom(this.activeRoom);
   }
 
@@ -52,9 +57,9 @@ export class ChatRoom {
   logout() {
     this.authService.logout();
     this.chatService.clearMessages();
-    this.onLogout.emit();
+    // ប្តូរ URL ទៅកាន់ /login វិញ
+    this.router.navigate(['/login']);
   }
-  
 
   private scrollToBottom() {
     try {

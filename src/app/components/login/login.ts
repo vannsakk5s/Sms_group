@@ -3,26 +3,34 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, RouterModule],
   standalone: true,
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
+  
   private authService = inject(AuthService);
-  @Output() onSwitch = new EventEmitter<void>();
-  @Output() onSuccess = new EventEmitter<void>();
+  private router = inject(Router);
 
   credentials = { email: '', password: '' };
 
   onLogin() {
     this.authService.login(this.credentials).subscribe({
-      next: () => this.onSuccess.emit(), // ចូលទៅកាន់ផ្ទាំង Chat
+      next: () => {
+        // ប្តូរទៅកាន់ URL /chat នៅពេល Login ជោគជ័យ
+        this.router.navigate(['/chat']);
+      },
       error: (err) => alert(err.error.message)
     });
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 
 }

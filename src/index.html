@@ -20,6 +20,7 @@
   <!-- Configure Tailwind with Poppins as default font -->
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
@@ -42,7 +43,7 @@
     }
   </style>
 </head>
-<body class="font-sans">
+<body class="font-sans bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
   <app-root></app-root>
 </body>
 </html>
