@@ -17,7 +17,7 @@ export class ChatRoom {
   chatService = inject(ChatService);
   authService = inject(AuthService);
   private router = inject(Router);
-  
+
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   newMessage = '';
@@ -27,18 +27,25 @@ export class ChatRoom {
     // ធ្វើឱ្យអូសចុះក្រោមអូតូពេលមានសារថ្មី
     effect(() => {
       if (this.chatService.messages().length > 0) {
-        setTimeout(() => this.scrollToBottom(), 50);
+        setTimeout(() => this.scrollToBottom(), 200);
       }
     });
   }
 
-  ngOnInit() {
-    // សំខាន់៖ ត្រូវ Join Room ពេល Component បើកមកភ្លាម
-    if (!this.authService.currentUser()) {
+  async ngOnInit() {
+    const token = this.authService.getToken();
+    if (!token) {
       this.router.navigate(['/login']);
       return;
     }
-    this.chatService.joinRoom(this.activeRoom);
+
+    // ១. ទាញសារមកបង្ហាញសិន
+    this.chatService.loadMessages(this.activeRoom);
+
+    // ២. ចាំ ០.៥ វិនាទី ចាំ Join Socket (ដើម្បីកុំឱ្យវាជាន់គ្នា)
+    setTimeout(() => {
+      this.chatService.joinRoom(this.activeRoom);
+    }, 500);
   }
 
   onSendMessage() {
@@ -58,12 +65,12 @@ export class ChatRoom {
     this.authService.logout();
     this.chatService.clearMessages();
     // ប្តូរ URL ទៅកាន់ /login វិញ
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 
   private scrollToBottom() {
     try {
       this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-    } catch (err) {}
+    } catch (err) { }
   }
 }

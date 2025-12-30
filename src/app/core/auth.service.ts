@@ -7,20 +7,35 @@ import { tap } from 'rxjs';
 export class AuthService {
   private http = inject(HttpClient);
   private readonly API_URL = 'http://localhost:3000/api/auth';
-  
-  currentUser = signal<IUser | null>(null);
+  private storedUser = localStorage.getItem('user');
+
+  currentUser = signal<any>(this.storedUser ? JSON.parse(this.storedUser) : null);
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 
   register(user: IUser) {
     return this.http.post(`${this.API_URL}/register`, user);
   }
 
   login(credentials: any) {
-    return this.http.post<IUser>(`${this.API_URL}/login`, credentials).pipe(
-      tap(user => this.currentUser.set(user))
+    return this.http.post<any>(`${this.API_URL}/login`, credentials).pipe(
+      tap(res => {
+        // រក្សាទុកម៉ោង Login ចូលទៅក្នុង LocalStorage
+        const loginTime = new Date().toISOString();
+        localStorage.setItem('loginTime', loginTime);
+
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        this.currentUser.set(res.user);
+      })
     );
   }
 
   logout() {
+    localStorage.removeItem('token'); // លុប Token
+    localStorage.removeItem('user');  // លុបព័ត៌មាន User
     this.currentUser.set(null);
   }
 }

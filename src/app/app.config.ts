@@ -27,18 +27,15 @@
 //   ]
 // };
 
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { Observable } from 'rxjs';
+import { authInterceptor } from './core/auth.interceptor';
 
-// ១. បង្កើត Factory សម្រាប់ Load ឯកសារ JSON
-// export function createTranslateLoader(http: HttpClient) {
-//   return new (TranslateHttpLoader as any)(http, './assets/i18n/', '.json');
-// }
 export class CustomLoader implements TranslateLoader {
   constructor(private http: HttpClient) { }
 
@@ -49,18 +46,9 @@ export class CustomLoader implements TranslateLoader {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
-    // importProvidersFrom(
-    //   TranslateModule.forRoot({
-    //     defaultLanguage: 'en', // កំណត់ភាសាដើមនៅទីនេះ
-    //     loader: {
-    //       provide: TranslateLoader,
-    //       useFactory: createTranslateLoader,
-    //       deps: [HttpClient]
-    //     }
-    //   })
-    // )
+    provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
