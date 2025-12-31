@@ -74,7 +74,7 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
     const existingToken = localStorage.getItem('token');
     if (existingToken) {
       console.log('✅ រកឃើញ Token ចាស់! កំពុងរុញទៅកាន់ Chat Room...');
-      this.router.navigate(['/chat-room']);
+      this.router.navigate(['/chat']);
       return; // ឈប់ធ្វើការងារខាងក្រោម
     }
 
@@ -92,7 +92,7 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
         // បើបងមាន User data គួររក្សាទុកដែរ
         if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
 
-        this.router.navigate(['/chat-room']);
+        this.router.navigate(['/chat']);
       });
     });
 
@@ -126,7 +126,7 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
   private handleLogin(user: any) {
     this.authService.loginWithTelegram(user).subscribe({
       next: () => {
-        this.router.navigate(['/chat-room']);
+        this.router.navigate(['/chat']);
       },
       error: (err) => {
         console.error('Telegram Login Error:', err);
