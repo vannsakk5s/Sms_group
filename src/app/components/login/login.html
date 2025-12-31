@@ -1,13 +1,14 @@
-<div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-200 dark:border-gray-700 transition-all">
+<div
+  class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-200 dark:border-gray-700 transition-all">
   <h2 class="text-3xl font-black text-blue-600 text-center mb-6">{{'Form.Login' | translate}}</h2>
-  
+
   <div class="space-y-4">
     <input [(ngModel)]="credentials.email" type="email" placeholder="{{'Form.Email' | translate}}"
       class="w-full p-4 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
-    
+
     <input [(ngModel)]="credentials.password" type="password" placeholder="{{'Form.Password' | translate}}"
       class="w-full p-4 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
-    
+
     <button (click)="onLogin()"
       class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold hover:bg-blue-700 transition-all">
       {{'Form.Login' | translate}}
@@ -15,9 +16,16 @@
   </div>
 
   <p class="text-center mt-6 text-sm dark:text-gray-400">
-    {{'Form.No account?' | translate}} 
+    {{'Form.No account?' | translate}}
     <a routerLink="/register" class="text-blue-600 cursor-pointer font-bold hover:underline">
       {{'Form.Register' | translate}}
     </a>
   </p>
+
+  <div class="login-container">
+
+    <div class="divider text-center my-4 text-gray-400">ឬ</div>
+
+    <app-telegram-auth></app-telegram-auth>
+  </div>
 </div>
