@@ -70,7 +70,16 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('telegramContainer', { static: true }) telegramContainer!: ElementRef;
 
   ngOnInit() {
-    this.socket = io('http://localhost:3000'); // ឬប្រើ ngrok URL
+    // ១. ឆែកមើលជាមុនសិន៖ បើមាន Token រួចហើយ ឱ្យវាទៅទំព័រ Chat ហ្មង
+    const existingToken = localStorage.getItem('token');
+    if (existingToken) {
+      console.log('✅ រកឃើញ Token ចាស់! កំពុងរុញទៅកាន់ Chat Room...');
+      this.router.navigate(['/chat-room']);
+      return; // ឈប់ធ្វើការងារខាងក្រោម
+    }
+
+    // ២. បើអត់ទាន់មាន Token ទេ ទើបបង្កើតការភ្ជាប់ Socket ដើម្បីចាំស្ដាប់
+    this.socket = io('http://localhost:3000');
 
     this.socket.on('connect', () => {
       console.log('✅ Socket បានភ្ជាប់ទៅ Backend ជោគជ័យ! ID:', this.socket.id);
@@ -80,6 +89,9 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
       console.log('🎁 ទទួលបានទិន្នន័យពី Telegram Bot ហើយ!', data);
       this.ngZone.run(() => {
         localStorage.setItem('token', data.token);
+        // បើបងមាន User data គួររក្សាទុកដែរ
+        if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
+
         this.router.navigate(['/chat-room']);
       });
     });
