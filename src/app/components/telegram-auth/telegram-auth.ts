@@ -87,12 +87,18 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
 
     this.socket.on('telegram_auth_success', (data: any) => {
       console.log('🎁 ទទួលបានទិន្នន័យពី Telegram Bot ហើយ!', data);
-      this.ngZone.run(() => {
-        localStorage.setItem('token', data.token);
-        // បើបងមាន User data គួររក្សាទុកដែរ
-        if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
 
-        this.router.navigate(['/chat']);
+      // ប្រើ ngZone ដើម្បីឱ្យ Angular ដឹងថាត្រូវ Update UI និងដូរទំព័រភ្លាមៗ
+      this.ngZone.run(() => {
+        localStorage.setItem('token', data.token); // រក្សាទុក Token
+
+        // បើមាន User data ត្រូវរក្សាទុកដែរ ដើម្បីបង្ហាញឈ្មោះលើ Web
+        if (data.user) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+        }
+
+        console.log('🚀 កំពុងផ្លាស់ទីទៅកាន់ទំព័រ Chat...');
+        this.router.navigate(['/chat']); // រុញទៅទំព័រ Chat ដោយស្វ័យប្រវត្តិ
       });
     });
 
