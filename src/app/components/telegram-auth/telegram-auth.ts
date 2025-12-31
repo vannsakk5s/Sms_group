@@ -22,7 +22,7 @@
 //   private renderWidget() {
 //     const script = document.createElement('script');
 //     script.src = 'https://telegram.org/js/telegram-widget.js?22';
-    
+
 //     // កំណត់ព័ត៌មាន Bot របស់អ្នក
 //     script.setAttribute('data-telegram-login', 'AUTHtelegram_bot'); 
 //     script.setAttribute('data-size', 'large');
@@ -70,24 +70,24 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('telegramContainer', { static: true }) telegramContainer!: ElementRef;
 
   ngOnInit() {
-    // ១. បង្កើតការភ្ជាប់ Socket ទៅកាន់ Backend
-    this.socket = io('http://localhost:3000'); // ដូរទៅ URL Vercel/Backend របស់បងពេល Deploy
+    this.socket = io('http://localhost:3000'); // ឬប្រើ ngrok URL
 
-    // ២. ស្ដាប់សញ្ញាពី Backend (នៅពេល User ចុច START ក្នុង Telegram App)
+    this.socket.on('connect', () => {
+      console.log('✅ Socket បានភ្ជាប់ទៅ Backend ជោគជ័យ! ID:', this.socket.id);
+    });
+
     this.socket.on('telegram_auth_success', (data: any) => {
+      console.log('🎁 ទទួលបានទិន្នន័យពី Telegram Bot ហើយ!', data);
       this.ngZone.run(() => {
-        console.log('Login ជោគជ័យតាមរយៈ Socket + Bot:', data);
-        
-        // រក្សាទុក Token និងទិន្នន័យ
         localStorage.setItem('token', data.token);
-        this.authService.currentUser.set(data.user); // Update signal ក្នុង AuthService
-        
-        // រុញទៅកាន់ទំព័រ Chat Room
         this.router.navigate(['/chat-room']);
       });
     });
-  }
 
+    this.socket.on('connect_error', (err) => {
+      console.error('❌ Socket ភ្ជាប់មិនចូលទេ:', err.message);
+    });
+  }
   ngAfterViewInit() {
     this.renderWidget();
   }
@@ -95,8 +95,8 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
   private renderWidget() {
     const script = document.createElement('script');
     script.src = 'https://telegram.org/js/telegram-widget.js?22';
-    
-    script.setAttribute('data-telegram-login', 'AUTHtelegram_bot'); 
+
+    script.setAttribute('data-telegram-login', 'AUTHtelegram_bot');
     script.setAttribute('data-size', 'large');
     script.setAttribute('data-radius', '10');
     script.setAttribute('data-onauth', 'onTelegramAuth(user)');
@@ -114,7 +114,7 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
   private handleLogin(user: any) {
     this.authService.loginWithTelegram(user).subscribe({
       next: () => {
-        this.router.navigate(['/chat-room']); 
+        this.router.navigate(['/chat-room']);
       },
       error: (err) => {
         console.error('Telegram Login Error:', err);
