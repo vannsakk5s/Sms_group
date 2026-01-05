@@ -53,6 +53,13 @@ export class AuthService {
 
   currentUser = signal<any>(this.storedUser ? JSON.parse(this.storedUser) : null);
 
+  loadUserFromStorage() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.currentUser.set(JSON.parse(user)); // Update ឈ្មោះ User ក្នុងកម្មវិធី
+    }
+  }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }

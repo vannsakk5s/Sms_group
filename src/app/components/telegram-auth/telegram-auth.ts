@@ -54,15 +54,24 @@ import { Component, AfterViewInit, OnDestroy, inject, NgZone, ElementRef, ViewCh
 import { AuthService } from '../../core/auth.service';
 import { Router } from '@angular/router';
 import { io, Socket } from 'socket.io-client'; // កុំភ្លេច install: npm install socket.io-client
+import { TranslateModule } from '@ngx-translate/core';
+import { ChatService } from '../../services/chat';
 
 @Component({
   selector: 'app-telegram-auth',
   standalone: true,
+  imports: [TranslateModule],
   templateUrl: './telegram-auth.html',
   styleUrl: './telegram-auth.css',
 })
 export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
+
+  ngAfterViewInit(): void {
+    // throw new Error('Method not implemented.');
+  }
+
   private authService = inject(AuthService);
+  private chatService = inject(ChatService);
   private router = inject(Router);
   private ngZone = inject(NgZone);
   private socket!: Socket;
@@ -85,60 +94,58 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
       console.log('✅ Socket បានភ្ជាប់ទៅ Backend ជោគជ័យ! ID:', this.socket.id);
     });
 
+    // telegram-auth.ts
     this.socket.on('telegram_auth_success', (data: any) => {
-      console.log('🎁 ទទួលបានទិន្នន័យពី Telegram Bot ហើយ!', data);
-
-      // ប្រើ ngZone ដើម្បីឱ្យ Angular ដឹងថាត្រូវ Update UI និងដូរទំព័រភ្លាមៗ
       this.ngZone.run(() => {
-        localStorage.setItem('token', data.token); // រក្សាទុក Token
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('loginTime', new Date().toISOString());
 
-        // បើមាន User data ត្រូវរក្សាទុកដែរ ដើម្បីបង្ហាញឈ្មោះលើ Web
-        if (data.user) {
-          localStorage.setItem('user', JSON.stringify(data.user));
-        }
+        // បញ្ជាឱ្យ ChatService ភ្ជាប់ Socket ឡើងវិញជាមួយ Token ថ្មីនេះ
+        this.chatService.reconnectSocket();
 
-        console.log('🚀 កំពុងផ្លាស់ទីទៅកាន់ទំព័រ Chat...');
-        this.router.navigate(['/chat']); // រុញទៅទំព័រ Chat ដោយស្វ័យប្រវត្តិ
+        this.router.navigate(['/chat']);
       });
     });
-
     this.socket.on('connect_error', (err) => {
       console.error('❌ Socket ភ្ជាប់មិនចូលទេ:', err.message);
     });
   }
-  ngAfterViewInit() {
-    this.renderWidget();
-  }
 
-  private renderWidget() {
-    const script = document.createElement('script');
-    script.src = 'https://telegram.org/js/telegram-widget.js?22';
+  // this telegram Widget
+  // ngAfterViewInit() {
+  //   this.renderWidget();
+  // }
 
-    script.setAttribute('data-telegram-login', 'AUTHtelegram_bot');
-    script.setAttribute('data-size', 'large');
-    script.setAttribute('data-radius', '10');
-    script.setAttribute('data-onauth', 'onTelegramAuth(user)');
-    script.setAttribute('data-request-access', 'write');
+  // private renderWidget() {
+  //   const script = document.createElement('script');
+  //   script.src = 'https://telegram.org/js/telegram-widget.js?22';
 
-    this.telegramContainer.nativeElement.appendChild(script);
+  //   script.setAttribute('data-telegram-login', 'AUTHtelegram_bot');
+  //   script.setAttribute('data-size', 'large');
+  //   script.setAttribute('data-radius', '10');
+  //   script.setAttribute('data-onauth', 'onTelegramAuth(user)');
+  //   script.setAttribute('data-request-access', 'write');
 
-    (window as any).onTelegramAuth = (user: any) => {
-      this.ngZone.run(() => {
-        this.handleLogin(user);
-      });
-    };
-  }
+  //   this.telegramContainer.nativeElement.appendChild(script);
 
-  private handleLogin(user: any) {
-    this.authService.loginWithTelegram(user).subscribe({
-      next: () => {
-        this.router.navigate(['/chat']);
-      },
-      error: (err) => {
-        console.error('Telegram Login Error:', err);
-      }
-    });
-  }
+  //   (window as any).onTelegramAuth = (user: any) => {
+  //     this.ngZone.run(() => {
+  //       this.handleLogin(user);
+  //     });
+  //   };
+  // }
+
+  // private handleLogin(user: any) {
+  //   this.authService.loginWithTelegram(user).subscribe({
+  //     next: () => {
+  //       this.router.navigate(['/chat']);
+  //     },
+  //     error: (err) => {
+  //       console.error('Telegram Login Error:', err);
+  //     }
+  //   });
+  // }
 
   ngOnDestroy() {
     // បិទការភ្ជាប់ Socket និងលុប Callback ពេលចាកចេញពី Component

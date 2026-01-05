@@ -1,13 +1,28 @@
 <!-- <div #telegramContainer class="flex justify-center my-4"></div> -->
 
 <div class="login-container">
-  <h3>ចូលប្រើប្រាស់តាមរយៈ Telegram</h3>
-  
-  <div #telegramContainer class="telegram-widget-wrapper flex justify-center py-4"></div>
 
-  <p>ឬ</p>
+  <div class="flex justify-center items-center py-3 text-sm">{{'Form.Social More' | translate}}</div>
 
-  <button (click)="openTelegramBot()" class="btn-telegram">
-    បើកកម្មវិធី Telegram
+  <!-- <div class="relative flex py-4 items-center">
+    <div class="flex-grow border-t border-gray-400"></div>
+    <span class="flex-shrink mx-4 text-sm text-gray-400">Or</span>
+    <div class="flex-grow border-t border-gray-400"></div>
+  </div> -->
+
+  <!-- this telegram auth widget is currently disabled. -->
+  <!-- <div #telegramContainer class="telegram-widget-wrapper flex justify-center py-4"></div> -->
+
+  <button (click)="openTelegramBot()" class="flex w-[380px] items-center justify-center gap-3 px-6 py-3 rounded-lg
+         bg-[#54A9EB] hover:bg-[#3d96dd]
+         dark:bg-[#2AABEE] dark:hover:bg-[#229ED9]
+         text-white font-medium text-md
+         shadow-md dark:shadow-lg
+         transition-colors duration-200">
+    <img src="assets/images/Telegram_Logo.png" width="20" height="20" alt="Telegram" />
+    {{'Form.Telegram' | translate}}
   </button>
+
+
+
 </div>

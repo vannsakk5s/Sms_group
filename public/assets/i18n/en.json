@@ -8,7 +8,12 @@
     "Register": "Register",
     "Username": "Username",
     "Have an account?": "Have an account?",
-    "Sign Up": "Sign Up"
+    "Sign Up": "Sign Up",
+    "Social More": "Or with social platform",
+    "Telegram": "Log in with Telegram",
+    "welcome": "welcome to Anajak",
+    "Dis welcome": "Please login using the form below",
+    "Dis welcome Reg": "Please register using the form below"
   },
   "Chat": {
     "GeneralChat": "General Chat",

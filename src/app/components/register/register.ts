@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
+import { TelegramAuth } from "../telegram-auth/telegram-auth";
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, FormsModule, TranslateModule, RouterModule],
+  imports: [CommonModule, FormsModule, TranslateModule, RouterModule, TelegramAuth],
   standalone: true,
   templateUrl: './register.html',
   styleUrl: './register.css',

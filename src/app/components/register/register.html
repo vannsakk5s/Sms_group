@@ -1,20 +1,27 @@
-<div class="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-200 dark:border-gray-700 transition-all">
-  <h2 class="text-3xl font-black text-blue-600 text-center mb-6">{{'Form.Sign Up' | translate}}</h2>
+<div class="bg-white flex flex-col justify-center items-center dark:bg-gray-800 p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-200 dark:border-gray-700 transition-all">
+  <img src="assets/images/anajak.png" width="60" height="60" alt="logo" class="brightness-100 invert dark:invert-0">
+
+  <h2 class="text-2xl font-semibold text-blue-600 text-center mt-4">{{'Form.welcome' | translate}}</h2>
+  <p class="mb-6 text-md">{{'Form.Dis welcome Reg' | translate}}</p>
   
   <div class="space-y-4">
     <input [(ngModel)]="authData.username" type="text" placeholder="{{'Form.Username' | translate}}" 
-      class="w-full p-4 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+      class="w-full py-[13px] px-5 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
     
     <input [(ngModel)]="authData.email" type="email" placeholder="{{'Form.Email' | translate}}" 
-      class="w-full p-4 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+      class="w-full py-[13px] px-5 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
     
     <input [(ngModel)]="authData.password" type="password" placeholder="{{'Form.Password' | translate}}" 
-      class="w-full p-4 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+      class="w-full py-[13px] px-5 bg-slate-50 dark:bg-gray-700 dark:text-white rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
     
     <button (click)="onRegister()" 
-      class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold hover:bg-blue-700 transition-all">
+      class="w-full bg-blue-600 text-white py-[13px] px-5 rounded-lg font-bold hover:bg-blue-700 transition-all">
       {{'Form.Sign Up' | translate}}
     </button>
+  </div>
+
+  <div class="">
+    <app-telegram-auth></app-telegram-auth>
   </div>
 
   <p class="text-center mt-6 text-sm dark:text-gray-400">

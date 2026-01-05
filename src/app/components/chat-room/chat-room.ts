@@ -33,19 +33,23 @@ export class ChatRoom {
   }
 
   async ngOnInit() {
+    this.authService.loadUserFromStorage();
     const token = this.authService.getToken();
     if (!token) {
       this.router.navigate(['/login']);
       return;
     }
 
+    this.chatService.clearMessages();
     // ១. ទាញសារមកបង្ហាញសិន
     this.chatService.loadMessages(this.activeRoom);
 
     // ២. ចាំ ០.៥ វិនាទី ចាំ Join Socket (ដើម្បីកុំឱ្យវាជាន់គ្នា)
     setTimeout(() => {
       this.chatService.joinRoom(this.activeRoom);
-    }, 500);
+    }, 1000);
+
+    // this.chatService.joinRoom(this.activeRoom);
   }
 
   onSendMessage() {

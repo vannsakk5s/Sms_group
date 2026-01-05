@@ -66,20 +66,76 @@ export class ChatService {
     });
   }
 
+  setTokenAndConnect() {
+    const token = this.authService.getToken();
+    if (this.socket) {
+      // ប្តូរ Token ក្នុង Socket Auth
+      this.socket.auth = { token: token };
+      // បង្ខំឱ្យវា Connect ឡើងវិញជាមួយ Token ថ្មីនេះ
+      this.socket.disconnect().connect();
+      console.log('🔄 Socket reconnected with new token');
+    }
+  }
+
+  connectSocket() {
+    if (this.socket) {
+      this.socket.disconnect(); // បិទអាខ្មោចចាស់ចោល
+    }
+
+    // បង្កើតការតភ្ជាប់ថ្មី ដោយយក Token ថ្មីចេញពី LocalStorage
+    this.socket = io('http://localhost:3000', {
+      auth: { token: this.authService.getToken() }
+    });
+
+    // ចាប់យកព្រឹត្តិការណ៍សារថ្មីឡើងវិញ
+    this.socket.on('receive_message', (msg: IMessage) => {
+      this.messages.update(prev => [...prev, msg]);
+    });
+  }
+
+  // loadMessages(room: string) {
+  //   const storedUser = localStorage.getItem('user');
+  //   const loginTime = localStorage.getItem('loginTime') || ''; // ទាញម៉ោង Login
+
+  //   if (!storedUser) return;
+  //   const username = JSON.parse(storedUser).username;
+
+  //   // បន្ថែម loginTime ទៅក្នុង URL query
+  //   const url = `http://localhost:3000/api/chat/history/${room}&since=${loginTime}`;
+
+  //   this.http.get<any[]>(url).subscribe({
+  //     next: (msgs) => this.messages.set(msgs),
+  //     error: (err) => console.error(err)
+  //   });
+  // }
+
   loadMessages(room: string) {
-    const storedUser = localStorage.getItem('user');
-    const loginTime = localStorage.getItem('loginTime') || ''; // ទាញម៉ោង Login
+    // ទាញយក loginTime ឱ្យបានច្បាស់លាស់
+    const loginTime = localStorage.getItem('loginTime');
 
-    if (!storedUser) return;
-    const username = JSON.parse(storedUser).username;
+    // បើអត់មាន loginTime ទេ (ករណី Error អីមួយ) ឱ្យវាទាញយកសារ 1 ម៉ោងមុនក៏បាន 
+    // ដើម្បីកុំឱ្យ Refresh ទៅបាត់អស់រលីង
+    const sinceParam = loginTime ? loginTime : new Date(Date.now() - 3600000).toISOString();
 
-    // បន្ថែម loginTime ទៅក្នុង URL query
-    const url = `http://localhost:3000/api/chat/history/${room}?username=${username}&since=${loginTime}`;
+    const url = `http://localhost:3000/api/chat/history/${room}?since=${sinceParam}`;
 
     this.http.get<any[]>(url).subscribe({
-      next: (msgs) => this.messages.set(msgs),
+      next: (msgs) => {
+        console.log('Fetched messages after refresh:', msgs);
+        this.messages.set(msgs);
+      },
       error: (err) => console.error(err)
     });
+  }
+
+  reconnectWithNewToken() {
+    if (this.socket) {
+      this.socket.disconnect(); // បិទការភ្ជាប់ចាស់
+    }
+
+    // បង្កើតការភ្ជាប់ថ្មីជាមួយ Token ដែលទើបទទួលបាន
+    this.socket.auth = { token: this.authService.getToken() };
+    this.socket.connect();
   }
 
   // បន្ថែម Function នេះដើម្បីបំបាត់ Error TS2339
@@ -94,5 +150,21 @@ export class ChatService {
 
   sendMessage(msg: IMessage) {
     this.socket.emit('send_message', msg);
+  }
+
+  // chat.ts
+  reconnectSocket() {
+    const token = localStorage.getItem('token');
+    if (this.socket) {
+      // ១. ផ្ដាច់ការភ្ជាប់ចាស់ (ដែលគ្មាន Token)
+      this.socket.disconnect();
+
+      // ២. ដាក់ Token ថ្មីចូល
+      this.socket.auth = { token: token };
+
+      // ៣. ភ្ជាប់ឡើងវិញ
+      this.socket.connect();
+      console.log('🔄 Socket has reconnected with new token!');
+    }
   }
 }

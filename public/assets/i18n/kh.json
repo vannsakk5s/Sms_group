@@ -8,7 +8,12 @@
     "Register": "ចុះឈ្មោះ",
     "Username": "ឈ្មោះអ្នកប្រើ",
     "Have an account?": "មានគណនីរួចហើយឬ?",
-    "Sign Up": "បង្កើតគណនី"
+    "Sign Up": "បង្កើតគណនី",
+    "Social More": "ឬ តាមរយៈវេទិកាសង្គម",
+    "Telegram": "ចូលដោយប្រើ Telegram",
+    "welcome": "សូមស្វាគមន៍មកកាន់ Anajak",
+    "Dis welcome": "សូមចូលគណនីដោយប្រើទម្រង់ខាងក្រោម",
+    "Dis welcome Reg": "សូមចុះឈ្មោះដោយប្រើទម្រង់ខាងក្រោម"
   },
   "Chat": {
     "GeneralChat": "ការជជែកទូទៅ",
