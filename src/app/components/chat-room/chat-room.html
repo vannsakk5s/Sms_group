@@ -1,80 +1,151 @@
-<div
-  class="w-full max-w-5xl h-[85vh] bg-white dark:bg-gray-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 dark:border-gray-700 transition-all">
-
+<div class="flex gap-4 justify-center item-center w-screen">
   <div
-    class="px-6 py-4 bg-white dark:bg-gray-800 border-b border-slate-100 dark:border-gray-700 flex justify-between items-center shadow-sm">
-    <div class="flex items-center gap-4">
-      <div
-        class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 dark:shadow-none">
-        💬
-      </div>
-      <div>
-        <h3 class="font-black text-slate-800 dark:text-white text-lg">{{'Chat.GeneralChat' | translate}}</h3>
-        <p class="text-xs text-green-500 flex items-center gap-1 font-bold">
-          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> {{'Chat.Online' | translate}}
-        </p>
+    class="p-4 w-[100%] max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-lg transition-all">
+    <div class="pb-4 border-b border-gray-200 dark:border-gray-600">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div class="w-[45px] h-[45px] bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+              @if (themeService.darkMode()) {
+              <img src="assets/images/anajak_game.png" width="27" height="27" alt="logo">
+              }
+              @else {
+              <img src="assets/images/anajak_dark.png" width="27" height="27" alt="logo">
+              }
+
+            </div>
+          </div>
+          <div>
+            <h1 class="font-semibold text-gray-800 dark:text-white">{{'Chat.Game' | translate}}</h1>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="flex items-center gap-6">
-      <div class="hidden md:flex flex-col items-end">
-        <span class="text-[10px] text-slate-400 font-bold uppercase">{{'Chat.LoggedInAs' | translate}}</span>
-        <span class="text-sm font-bold text-slate-700 dark:text-gray-300">{{ authService.currentUser()?.username
-          }}</span>
+    <div class="p-2 mt-4 border border-gray-200 dark:border-gray-600 shadow-sm rounded-xl">
+      <div class="flex">
+        <div class="mb-2 mr-2 w-[100px] h-[100px]">
+          <img class="rounded-lg" src="assets/images/chess.png" width="100" height="100" alt="Game Profile">
+        </div>
+        <div class="">
+          <p class="font-semibold">{{'Game.Chess.Title Game' | translate}}</p>
+          <p class="text-[12px] mt-[5px] text-slate-600 dark:text-slate-400">+ {{'Game.Chess.description Game' | translate}}</p>
+          <p class="text-[12px] text-slate-600 dark:text-slate-400">+ {{'Game.Chess.description Game one' | translate}}</p>
+          <p class="text-[12px] text-slate-600 dark:text-slate-400">+ {{'Game.Chess.description Game two' | translate}}</p>
+          <p class="text-[12px] text-slate-600 dark:text-slate-400">+ {{'Game.Chess.description Game three' | translate}}</p>
+        </div>
       </div>
-      <button (click)="logout()"
-        class="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-xl font-bold text-xs border border-red-100 dark:border-red-900/30">
-        {{'Chat.Logout' | translate}}
+      <div class="mb-2 border-b border-gray-200 dark:border-gray-600"></div>
+
+      <button (click)="startSearching()"
+        class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+        {{ matchmakingService.isSearching() ? ('Game.Loading' | translate) : ('Game.Button' | translate) }}
       </button>
     </div>
+
+    
   </div>
-
-  <div class="scrollbar-hide flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/50 dark:bg-gray-900" #scrollContainer>
-    @if (chatService.messages().length === 0) {
-    <div class="h-full flex flex-col items-center justify-center text-slate-300 dark:text-slate-600">
-      <div class="text-6xl mb-4">🏜️</div>
-      <p class="font-medium italic text-sm">{{'Chat.NoMessages' | translate}}</p>
-    </div>
-    }
-
-    @for (msg of chatService.messages(); track $index) {
-    <div class="flex flex-col"
-      [ngClass]="msg.sender === authService.currentUser()?.username ? 'items-end' : 'items-start'">
-
-      <div>
-        <span class="text-[10px] font-black text-slate-400 dark:text-slate-500 mb-1.5 uppercase tracking-[0.1em]">
-          {{ msg.sender }}
-        </span>
-        <span class="text-[9px] text-slate-400 dark:text-slate-500 mt-1 px-2">
-          {{ msg.timestamp | date: 'dd/MM/yyyy HH:mm:ss' }}
-        </span>
-      </div>
-
-      <div
-        [ngClass]="msg.sender === authService.currentUser()?.username 
-              ? 'bg-blue-600 text-white rounded-2xl rounded-tr-none shadow-blue-100 dark:shadow-none' 
-              : 'bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-200 border border-slate-200 dark:border-gray-700 rounded-2xl rounded-tl-none shadow-slate-50 dark:shadow-none'"
-        class="px-5 py-3.5 shadow-md max-w-[80%] md:max-w-md break-words font-medium leading-relaxed transition-colors">
-        {{ msg.content }}
-      </div>
-    </div>
-    }
-  </div>
-
   <div
-    class="p-4 bg-white dark:bg-gray-800 border-t border-slate-100 dark:border-gray-700 flex items-center gap-3 transition-colors">
-    <div class="relative flex-1 ">
-      <input [(ngModel)]="newMessage" (keyup.enter)="onSendMessage()" type="text"
-        placeholder="{{'Chat.TypeMessage' | translate}}"
-        class="w-full bg-slate-100 dark:bg-gray-700 border-none rounded-2xl px-6 py-4 pr-12 focus:ring-2 focus:ring-blue-500 outline-none transition-all font-medium text-slate-700 dark:text-white placeholder:text-slate-400 dark:placeholder:text-gray-400">
+    class="w-[100%] max-w-5xl h-[85vh] bg-white dark:bg-gray-900 rounded-2xl shadow-lg flex flex-col overflow-hidden border border-gray-200 dark:border-gray-800">
+
+    <!-- Clean Header -->
+    <div class="px-4 py-4 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <div class="w-[45px] h-[45px] bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+              <img src="assets/images/anajak.png" width="25" height="25" alt="logo"
+                class="brightness-100 invert dark:invert-0">
+            </div>
+          </div>
+          <div>
+            <h1 class="font-semibold text-gray-800 dark:text-white">{{'Chat.GeneralChat' | translate}}</h1>
+            <p class="text-sm text-green-600 dark:text-green-400 flex items-center gap-1">
+              <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              {{'Chat.Online' | translate}}
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="hidden md:flex flex-col items-end">
+            <span class="text-xs text-gray-500 dark:text-gray-400 uppercase font-medium">{{'Chat.LoggedInAs' |
+              translate}}</span>
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ authService.currentUser()?.username
+              }}</span>
+          </div>
+          <button (click)="logout()"
+            class="px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:text-white hover:bg-red-600 dark:hover:bg-red-700 rounded-lg border border-red-200 dark:border-red-800 hover:border-red-600 transition-colors duration-200">
+            {{'Chat.Logout' | translate}}
+          </button>
+        </div>
+      </div>
     </div>
 
-    <button (click)="onSendMessage()" [disabled]="!newMessage.trim()"
-      class="bg-blue-600 text-white p-4 rounded-2xl shadow-xl shadow-blue-200 dark:shadow-none hover:bg-blue-700 hover:scale-105 transition-all active:scale-90 disabled:opacity-50 disabled:hover:scale-100">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 rotate-90">
-        <path
-          d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-      </svg>
-    </button>
+    <!-- Messages Container -->
+    <div class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950 p-4" #scrollContainer>
+      @if (chatService.messages().length === 0) {
+      <div class="h-full flex flex-col items-center justify-center">
+        <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-gray-400 dark:text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+              clip-rule="evenodd" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">{{'Chat.NoMessages' | translate}}</h3>
+        <p class="text-sm text-gray-400 dark:text-gray-600 mt-1">Send your first message below</p>
+      </div>
+      }
+
+      <div class="space-y-4">
+        @for (msg of chatService.messages(); track $index) {
+        @let isMe = msg.sender === authService.currentUser()?.username;
+
+        <div class="flex w-full mb-4" [ngClass]="isMe ? 'justify-end' : 'justify-start'">
+          <div class="max-w-[80%] flex flex-col" [ngClass]="isMe ? 'items-end' : 'items-start'">
+
+            @if (!isMe) {
+            <span class="text-xs font-semibold text-green-500 mb-[2px] ml-1">{{ msg.sender }}</span>
+            }
+
+            <div
+              [ngClass]="isMe 
+              ? 'bg-[#b8ffcc] dark:bg-[#2b5278] text-gray-800 dark:text-white rounded-l-xl rounded-tr-xl' 
+              : 'bg-white dark:bg-[#212d3b] border dark:border-gray-950 text-gray-800 dark:text-white rounded-r-xl rounded-tl-xl'"
+              class="relative px-2 py-2 shadow-sm min-w-[60px]">
+
+              <div class="flex items-center items-end">
+                <p class="text-[15px] mb-1 leading-snug break-words whitespace-pre-wrap flex-grow">
+                  {{ msg.content }}
+                </p>
+
+                <div class="text-[10px] opacity-60 flex items-center gap-1 self-end ml-1 mt-1">
+                  <span>{{ msg.timestamp | date: 'h:mm a' }}</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Message Input -->
+    <div class="p-4 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
+      <div class="flex items-center gap-2">
+        <div class="flex-1">
+          <input [(ngModel)]="newMessage" (keyup.enter)="onSendMessage()" type="text"
+            placeholder="{{'Chat.TypeMessage' | translate}}"
+            class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-500 dark:focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 transition-colors duration-200 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm">
+        </div>
+
+        <button (click)="onSendMessage()" [disabled]="!newMessage.trim()"
+          class="px-3 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+          <img src="assets/images/Telegram_Logo.png" width="20" height="20" alt="Telegram" />
+        </button>
+      </div>
+    </div>
   </div>
 </div>

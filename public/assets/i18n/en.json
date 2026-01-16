@@ -17,10 +17,27 @@
   },
   "Chat": {
     "GeneralChat": "General Chat",
+    "Game": "Group Game",
     "Online": "Online",
     "LoggedInAs": "Logged in as",
     "Logout": "Logout",
     "NoMessages": "No messages yet. Start the conversation!",
     "TypeMessage": "Type your message here..."
+  },
+  "Game": {
+    "Chess": {
+      "Title Game": "Arena of Chess Battles",
+      "description Game": "Chess improves thinking skills.",
+      "description Game one": "concentration, and patience.",
+      "description Game two": "It is a game for all easy to learn.",
+      "description Game three": "It is a 1v1 game."
+    },
+    "More Game": {
+
+    },
+    "Button": "Start Playing Now",
+    "Loading": "Searching for an opponent…"
+    
   }
+
 }
