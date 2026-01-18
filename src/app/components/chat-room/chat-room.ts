@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MatchmakingService } from '../../services/matchmaking';
 import { ThemeService } from '../../core/theme.service';
+import { TicTacToeService } from '../../services/tic-tac-toe';
 
 @Component({
   selector: 'app-chat-room',
@@ -26,6 +27,7 @@ export class ChatRoom {
   activeRoom = 'General';
 
   matchService = inject(MatchmakingService); // បន្ថែមនេះ
+  ticTacToeService = inject(TicTacToeService);  
 
   constructor(public matchmakingService: MatchmakingService, public themeService: ThemeService) {
     effect(() => {
@@ -42,6 +44,11 @@ export class ChatRoom {
       this.router.navigate(['/login']);
       return;
     }
+
+    this.chatService.disconnect(); // បិទ connection ចាស់ (ដែលអត់ token)
+    setTimeout(() => {
+        this.chatService.connect(); // បើក connection ថ្មី (ពេលនេះវាទាញយក token ពី storage បានហើយ)
+    }, 100);
 
     this.chatService.clearMessages();
     this.chatService.loadMessages(this.activeRoom);
@@ -73,6 +80,10 @@ export class ChatRoom {
 
   startSearching() {
     this.matchmakingService.findMatch();
+  }
+
+  startTicTacToeSearching() {
+    this.ticTacToeService.findMatch();
   }
 
   private scrollToBottom() {

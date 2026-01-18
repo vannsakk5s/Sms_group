@@ -32,8 +32,12 @@
       "description Game two": "It is a game for all easy to learn.",
       "description Game three": "It is a 1v1 game."
     },
-    "More Game": {
-
+    "TTToe": {
+      "Title Game": "XOX Arena",
+      "description Game": "is easy to learn,fun to play.",
+      "description Game one": "Whether you play for fun.",
+      "description Game two": "players take turns placing X and O.",
+      "description Game three": "It is a 1v1 game."
     },
     "Button": "Start Playing Now",
     "Loading": "Searching for an opponent…"

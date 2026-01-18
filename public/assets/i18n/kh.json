@@ -32,8 +32,12 @@
       "description Game two": "វាជាហ្គេមសម្រាប់គ្រប់វ័យ ងាយស្រួលរៀន។",
       "description Game three": "វាជាហ្គេម 1v1"
     },
-    "More Game": {
-
+    "TTToe": {
+      "Title Game": "សមរភូមិ XOX",
+      "description Game": "ងាយស្រួលរៀន និងរីករាយលេង។",
+      "description Game one": "មិនថាអ្នកលេងសម្រាប់កម្សាន្ត។",
+      "description Game two": "អ្នកលេងប្ដូរវេនគ្នាដាក់ X និង O។",
+      "description Game three": "វាជាល្បែង 1v1។"
     },
     "Button": "ចាប់ផ្តើមលេងឥឡូវនេះ",
     "Loading": "កំពុងស្វែងរកគូ..."

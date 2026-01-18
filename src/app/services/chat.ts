@@ -93,6 +93,24 @@ export class ChatService {
     });
   }
 
+  disconnect() {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
+  }
+
+  connect() {
+    // សំខាន់៖ ត្រូវយក Token ថ្មីពី Storage រាល់ពេល connect
+    const token = localStorage.getItem('access_token');
+
+    // Update auth option របស់ socket
+    this.socket.io.opts.query = { token: token };
+    // ឬបើប្រើ 'auth' object:
+    // this.socket.auth = { token: token };
+
+    this.socket.connect();
+  }
+
   // loadMessages(room: string) {
   //   const storedUser = localStorage.getItem('user');
   //   const loginTime = localStorage.getItem('loginTime') || ''; // ទាញម៉ោង Login
