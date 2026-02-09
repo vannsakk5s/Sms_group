@@ -22,7 +22,7 @@ export class Register {
   onRegister() {
     this.authService.register(this.authData).subscribe({
       next: () => {
-        alert('ចុះឈ្មោះជោគជ័យ!');
+        alert('success!'+JSON.stringify(this.authData));
         // ប្តូរទៅកាន់ URL /login បន្ទាប់ពីចុះឈ្មោះជោគជ័យ
         this.router.navigate(['/login']);
       },
