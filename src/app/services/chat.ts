@@ -13,7 +13,7 @@
 
 //   constructor() {
 //     // បញ្ជូន Token ទៅជាមួយការ Connect Socket
-//     this.socket = io('http://localhost:3000', {
+//     this.socket = io('https://competition-run-ftp-plymouth.trycloudflare.com', {
 //       auth: { token: this.authService.getToken() }
 //     });
 
@@ -53,11 +53,11 @@ export class ChatService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
   private socket: Socket;
-  private apiUrl = 'http://localhost:3000/api/messages';
+  private apiUrl = 'https://competition-run-ftp-plymouth.trycloudflare.com/api/messages';
   messages = signal<any[]>([]);
 
   constructor() {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://competition-run-ftp-plymouth.trycloudflare.com', {
       auth: { token: this.authService.getToken() }
     });
 
@@ -83,7 +83,7 @@ export class ChatService {
     }
 
     // បង្កើតការតភ្ជាប់ថ្មី ដោយយក Token ថ្មីចេញពី LocalStorage
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://competition-run-ftp-plymouth.trycloudflare.com', {
       auth: { token: this.authService.getToken() }
     });
 
@@ -119,7 +119,7 @@ export class ChatService {
   //   const username = JSON.parse(storedUser).username;
 
   //   // បន្ថែម loginTime ទៅក្នុង URL query
-  //   const url = `http://localhost:3000/api/chat/history/${room}&since=${loginTime}`;
+  //   const url = `https://competition-run-ftp-plymouth.trycloudflare.com/api/chat/history/${room}&since=${loginTime}`;
 
   //   this.http.get<any[]>(url).subscribe({
   //     next: (msgs) => this.messages.set(msgs),
@@ -135,7 +135,7 @@ export class ChatService {
     // ដើម្បីកុំឱ្យ Refresh ទៅបាត់អស់រលីង
     const sinceParam = loginTime ? loginTime : new Date(Date.now() - 3600000).toISOString();
 
-    const url = `http://localhost:3000/api/chat/history/${room}?since=${sinceParam}`;
+    const url = `https://competition-run-ftp-plymouth.trycloudflare.com/api/chat/history/${room}?since=${sinceParam}`;
 
     this.http.get<any[]>(url).subscribe({
       next: (msgs) => {

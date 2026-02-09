@@ -30,7 +30,11 @@
       "description Game": "Chess improves thinking skills.",
       "description Game one": "concentration, and patience.",
       "description Game two": "It is a game for all easy to learn.",
-      "description Game three": "It is a 1v1 game."
+      "description Game three": "It is a 1v1 game.",
+      "Opponent": "Opponent",
+      "You": "You",
+      "YourTurn": "Your Turn",
+      "Thinking": "Thinking..."
     },
     "TTToe": {
       "Title Game": "XOX Arena",

@@ -20,7 +20,7 @@ export class TicTacToeService {
 
   constructor() {
     // ត្រូវប្រាកដថា URL និង Token ត្រឹមត្រូវ
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://competition-run-ftp-plymouth.trycloudflare.com', {
       auth: { token: localStorage.getItem('authToken') }
     });
 

@@ -30,7 +30,11 @@
       "description Game": "អុក ជួយអភិវឌ្ឍសមត្ថភាពគិត វិភាគ។",
       "description Game one": "ការផ្តោតអារម្មណ៍ និងភាពអត់ធ្មត់។",
       "description Game two": "វាជាហ្គេមសម្រាប់គ្រប់វ័យ ងាយស្រួលរៀន។",
-      "description Game three": "វាជាហ្គេម 1v1"
+      "description Game three": "វាជាហ្គេម 1v1",
+      "Opponent": "គូប្រកួត",
+      "You": "អ្នក",
+      "YourTurn": "វេនរបស់អ្នក",
+      "Thinking": "កំពុងគិត..."
     },
     "TTToe": {
       "Title Game": "សមរភូមិ XOX",

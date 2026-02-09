@@ -1,55 +1,51 @@
-<div class="flex flex-col items-center justify-center min-h-screen bg-slate-900 text-slate-100 font-sans">
-      
+<div class="flex flex-col items-center justify-center min-h-screen text-slate-100 font-sans">
+
   <h1 class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
     Tic Tac Toe
   </h1>
+  <div class="flex justify-between mb-2 items-center w-full">
+    <div class="text-lg text-black">
+      អ្នកជា: <span class="font-bold text-yellow-400">{{ mySide() || '...' }}</span>
+    </div>
 
-  <div class="mb-4 text-lg bg-slate-800 px-4 py-2 rounded-lg">
-    អ្នកលេងជា: <span class="font-bold text-yellow-400">{{ mySide() || '...' }}</span>
-  </div>
-
-  <div class="mb-6 h-8 text-xl font-semibold tracking-wide">
-    @if (winner()) {
+    <div class="h-8 text-xl font-semibold tracking-wide">
+      @if (winner()) {
       <span class="text-green-400 animate-pulse">Winner: {{ winner() }}! 🎉</span>
-    } @else if (isDraw()) {
+      } @else if (isDraw()) {
       <span class="text-yellow-400">It's a Draw! 🤝</span>
-    } @else {
+      } @else {
       <span class="text-slate-400">
-        Turn: 
-        <span [class.text-teal-400]="currentPlayer() === 'X'" [class.text-rose-400]="currentPlayer() === 'O'">
-          Player {{ currentPlayer() }}
-        </span>
+        <!-- Turn: 
+        <span [class.text-teal-400]="currentPlayer() === 'X'" 
+              [class.text-rose-400]="currentPlayer() === 'O'"
+              class="font-bold text-2xl">
+          {{ currentPlayer() }}
+        </span> -->
         @if(currentPlayer() !== mySide()) {
-          <span class="text-xs text-gray-500 ml-2">(រង់ចាំគូប្រកួត...)</span>
+        <span class="text-xs text-gray-500">រង់ចាំគូប្រកួត...</span>
+        } @else {
+        <span class="text-xs text-teal-400">វេនរបស់អ្នក</span>
         }
       </span>
-    }
+      }
+    </div>
   </div>
 
-  <div class="grid grid-cols-3 gap-2 bg-slate-700 p-2 rounded-xl shadow-2xl">
+
+  <div class="grid grid-cols-3 gap-2 bg-slate-500 dark:bg-slate-700 p-2 rounded-xl shadow-2xl">
     @for (cell of board(); track index; let index = $index) {
-      <button 
-        (click)="makeMove(index)"
-        [disabled]="winner() || cell !== '' || currentPlayer() !== mySide()"
-        class="w-24 h-24 sm:w-32 sm:h-32 bg-slate-800 rounded-lg flex items-center justify-center text-5xl font-bold transition-all duration-200 hover:bg-slate-750 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        <span 
-          class="transform transition-transform duration-300"
-          [class.scale-100]="cell !== ''" 
-          [class.scale-0]="cell === ''"
-          [class.text-teal-400]="cell === 'X'"
-          [class.text-rose-400]="cell === 'O'"
-        >
-          {{ cell }}
-        </span>
-      </button>
+    <button (click)="makeMove(index)" [disabled]="winner() || cell !== '' || currentPlayer() !== mySide()"
+      class="w-24 h-24 sm:w-32 sm:h-32 bg-slate-800 rounded-lg flex items-center justify-center text-5xl font-bold transition-all duration-200 hover:bg-slate-750 disabled:opacity-50 disabled:cursor-not-allowed">
+      <span class="transform transition-transform duration-300" [class.scale-100]="cell !== ''"
+        [class.scale-0]="cell === ''" [class.text-teal-400]="cell === 'X'" [class.text-rose-400]="cell === 'O'">
+        {{ cell }}
+      </span>
+    </button>
     }
   </div>
 
-  <button 
-    (click)="findNewMatch()"
-    class="mt-8 px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-full font-semibold transition-colors shadow-lg border border-slate-600"
-  >
+  <button (click)="findNewMatch()"
+    class="mt-8 px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-full font-semibold transition-colors shadow-lg border border-slate-600">
     Find New Match
   </button>
 

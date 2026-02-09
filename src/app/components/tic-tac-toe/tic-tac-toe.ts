@@ -25,8 +25,6 @@ export class TicTacToe implements OnInit {
   isDraw = computed(() => !this.winner() && this.board().every(cell => cell !== ''));
 
   ngOnInit() {
-    // បើ User ចូលតាម URL ដោយមិនទាន់មាន GameID (ករណី Refresh Page)
-    // អ្នកអាចបន្ថែម Logic ដើម្បី Re-join នៅទីនេះបាន
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
        this.gameService.gameId.set(id);
@@ -34,7 +32,6 @@ export class TicTacToe implements OnInit {
   }
 
   makeMove(index: number) {
-    // ហៅទៅ Service ជំនួសឱ្យការធ្វើ Local Logic
     this.gameService.makeMove(index);
   }
 
