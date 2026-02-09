@@ -6,7 +6,7 @@
 // @Injectable({ providedIn: 'root' })
 // export class AuthService {
 //   private http = inject(HttpClient);
-//   private readonly API_URL = 'http://localhost:3000/api/auth';
+//   private readonly API_URL = 'https://competition-run-ftp-plymouth.trycloudflare.com/api/auth';
 //   private storedUser = localStorage.getItem('user');
 
 //   currentUser = signal<any>(this.storedUser ? JSON.parse(this.storedUser) : null);
@@ -48,7 +48,7 @@ import { tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly API_URL = 'http://localhost:3000/api/auth';
+  private readonly API_URL = 'https://competition-run-ftp-plymouth.trycloudflare.com/api/auth';
   private storedUser = localStorage.getItem('user');
 
   currentUser = signal<any>(this.storedUser ? JSON.parse(this.storedUser) : null);
