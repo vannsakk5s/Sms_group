@@ -95,7 +95,7 @@ export class Chessboard implements OnInit {
   }
 
   private initSocket() {
-    this.socket = io('http://localhost:3000', {
+    this.socket = io('https://technical-officially-chelsea-workplace.trycloudflare.com', {
       auth: { token: localStorage.getItem('authToken') }
     });
 
