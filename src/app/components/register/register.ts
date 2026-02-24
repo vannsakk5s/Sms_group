@@ -23,6 +23,7 @@ export class Register {
     this.authService.register(this.authData).subscribe({
       next: () => {
         // alert('success!'+JSON.stringify(this.authData));
+        alert('✅ ចុះឈ្មោះជោគជ័យ! សូមចូលប្រើប្រាស់ដោយការចុះឈ្មោះថ្មីនេះ។');
         // ប្តូរទៅកាន់ URL /login បន្ទាប់ពីចុះឈ្មោះជោគជ័យ
         this.router.navigate(['/login']);
       },
