@@ -88,7 +88,7 @@ export class TelegramAuth implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // ២. បើអត់ទាន់មាន Token ទេ ទើបបង្កើតការភ្ជាប់ Socket ដើម្បីចាំស្ដាប់
-    this.socket = io('https://childrens-selective-arthritis-vincent.trycloudflare.com');
+    this.socket = io('https://wet-tumor-closer-dried.trycloudflare.com');
 
     this.socket.on('connect', () => {
       console.log('✅ Socket បានភ្ជាប់ទៅ Backend ជោគជ័យ! ID:', this.socket.id);
