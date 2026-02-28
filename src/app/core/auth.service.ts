@@ -48,7 +48,7 @@ import { tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
-  private readonly API_URL = 'https://wet-tumor-closer-dried.trycloudflare.com/api/auth';
+  private readonly API_URL = 'https://september-document-cheap-cloud.trycloudflare.com/api/auth';
   private storedUser = localStorage.getItem('user');
 
   currentUser = signal<any>(this.storedUser ? JSON.parse(this.storedUser) : null);
