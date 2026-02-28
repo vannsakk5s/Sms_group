@@ -37,7 +37,7 @@ import { io } from 'socket.io-client';
 
 @Injectable({ providedIn: 'root' })
 export class MatchmakingService {
-  private socket = io('https://wet-tumor-closer-dried.trycloudflare.com');
+  private socket = io('https://september-document-cheap-cloud.trycloudflare.com');
   private router = inject(Router);
   
   isSearching = signal(false);
