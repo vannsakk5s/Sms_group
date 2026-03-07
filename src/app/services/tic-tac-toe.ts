@@ -20,7 +20,7 @@ export class TicTacToeService {
 
   constructor() {
     // ត្រូវប្រាកដថា URL និង Token ត្រឹមត្រូវ
-    this.socket = io('https://september-document-cheap-cloud.trycloudflare.com', {
+    this.socket = io('https://dsl-fact-citizens-reflection.trycloudflare.com', {
       auth: { token: localStorage.getItem('authToken') }
     });
 
